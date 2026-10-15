@@ -1,15 +1,14 @@
 const { shareAll, withModuleFederationPlugin } = require('@angular-architects/module-federation/webpack');
 
 module.exports = withModuleFederationPlugin({
-
-  name: 'Microfrontend-Products-Angular',
+  name: 'mf-products',
+  filename: 'remoteEntry.js',
 
   exposes: {
-    './Component': './src\app\app.ts',
+    './Routes': './src/app/app.routes.ts',
   },
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
   },
-
 });
