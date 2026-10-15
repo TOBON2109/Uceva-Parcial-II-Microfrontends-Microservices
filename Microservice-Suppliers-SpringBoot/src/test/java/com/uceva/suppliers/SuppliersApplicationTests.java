@@ -1,4 +1,4 @@
-package Microservice_Suppliers_SpringBoot;
+package com.uceva.suppliers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
