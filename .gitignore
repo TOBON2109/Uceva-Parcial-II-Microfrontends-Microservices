@@ -6,4 +6,4 @@ documentation/
 target/
 .idea/
 *.log
-.env
+.env.vscode/
