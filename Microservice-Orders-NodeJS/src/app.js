@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 
+const swaggerDocument = require('./infrastructure/http/swagger');
 const InMemoryOrderRepository = require('./infrastructure/repositories/in-memory-order.repository');
 const ListOrdersUseCase = require('./application/use-cases/list-orders.usecase');
 const CreateOrderUseCase = require('./application/use-cases/create-order.usecase');
@@ -20,6 +22,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/orders', createOrderRoutes(controller));
 
 module.exports = app;
