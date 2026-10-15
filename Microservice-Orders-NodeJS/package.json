@@ -1,0 +1,14 @@
+{
+  "name": "microservice-orders-nodejs",
+  "version": "1.0.0",
+  "description": "Microservicio de Órdenes de Compra - Parcial II Arquitectura de Software",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
