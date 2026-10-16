@@ -1,59 +1,97 @@
-# MicrofrontendOrdersAngular
+# 🧾 Microfrontend de Órdenes de Compra (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.14.
+- Microfrontend del sistema de Inventario / Almacén, desarrollado con Angular 20.3.14 y Webpack Module Federation.
+- Aplica Clean Architecture y es integrado por `Client-Host-Angular`.
+- Consume el microservicio `Microservice-Orders-NodeJS` (`http://localhost:3003/api/orders`).
 
-## Development server
+## 🏗️ Arquitectura (Clean Architecture)
 
-To start a local development server, run:
-
-```bash
-ng serve
+```
+src/app
+│
+├── core
+│   ├── domain
+│   │   ├── models
+│   │   │   └── order.model.ts
+│   │   └── repositories
+│   │       └── order.repository.ts
+│   ├── application
+│   │   └── use-cases
+│   │       ├── list-orders.use-case.ts
+│   │       ├── create-order.use-case.ts
+│   │       └── get-order-by-id.use-case.ts
+│   └── infrastructure
+│       ├── config
+│       │   ├── api.config.ts
+│       │   └── orders.providers.ts
+│       └── repositories
+│           └── http-order.repository.ts
+│
+├── presentation
+│   ├── layout
+│   │   └── orders-layout.component.ts
+│   ├── pages
+│   │   ├── order-list.component.ts
+│   │   ├── order-form.component.ts
+│   │   └── order-search.component.ts
+│   └── shared
+│       └── shared.scss
+│
+├── app.routes.ts
+└── app.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **domain:** modelos `Order`, `OrderItem` y contrato `OrderRepository`. No depende de Angular.
+- **application:** casos de uso que dependen solo del contrato del repositorio.
+- **infrastructure:** implementación HTTP del repositorio y proveedores de dependencias, que viajan con las rutas del microfrontend.
+- **presentation:** layout y páginas que usan únicamente los casos de uso.
 
-## Code scaffolding
+## 🧩 Casos de Uso
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Caso de uso | Descripción |
+| --- | --- |
+| ListOrdersUseCase | Lista las órdenes de compra |
+| CreateOrderUseCase | Crea una orden con uno o varios ítems |
+| GetOrderByIdUseCase | Consulta una orden por su ID |
 
-```bash
-ng generate component component-name
-```
+## 🔌 Integración
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+| Dato | Valor |
+| --- | --- |
+| Nombre del remote | `mf-orders` |
+| Puerto | `4203` |
+| Remote entry | `http://localhost:4203/remoteEntry.js` |
+| Módulo expuesto | `./Routes` (`src/app/app.routes.ts`) |
+| Microservicio consumido | `Microservice-Orders-NodeJS` en el puerto `3003` |
 
-```bash
-ng generate --help
-```
+## 📋 Requisitos Previos
 
-## Building
+- Node.js 20.19+ (o 22.12+)
+- npm
+- Google Chrome (para las pruebas)
+- Microservicio de Órdenes en ejecución
 
-To build the project run:
+## 🚀 Ejecución
 
-```bash
-ng build
-```
+### 1️⃣ Instalar Dependencias
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Ubícate en la raíz de `Microfrontend-Orders-Angular` y ejecuta: `npm i`
 
-## Running unit tests
+### 2️⃣ Ejecutar el Proyecto
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Ejecuta el comando: `npm start`
 
-```bash
-ng test
-```
+### 3️⃣ Verificar Funcionamiento
 
-## Running end-to-end tests
+- Corriendo en: `http://localhost:4203`
+- Remote entry: `http://localhost:4203/remoteEntry.js`
 
-For end-to-end (e2e) testing, run:
+## 🧪 Pruebas Unitarias
 
-```bash
-ng e2e
-```
+- Ejecuta: `npm test -- --no-watch --code-coverage --browsers=ChromeHeadless`
+- El reporte de cobertura se genera en la carpeta `coverage/`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📚 Documentación Técnica (Compodoc)
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Generar: `npm run compodoc`
+- Ver: `npx compodoc -s -d documentation` y abrir `http://localhost:8080`
