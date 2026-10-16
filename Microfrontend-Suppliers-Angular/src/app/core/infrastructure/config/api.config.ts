@@ -1,0 +1,1 @@
+export const SUPPLIERS_API_URL = 'http://localhost:3002/api/suppliers';
