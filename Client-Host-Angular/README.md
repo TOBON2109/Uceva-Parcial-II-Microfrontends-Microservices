@@ -1,59 +1,60 @@
-# ClientHostAngular
+# 🖥️ Host (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.14.
+- Aplicación host del sistema de Inventario / Almacén, desarrollada con Angular 20.3.14 y Webpack Module Federation.
+- Integra los tres microfrontends mediante un navbar y carga sus rutas de forma remota.
 
-## Development server
+## 🏗️ Estructura
 
-To start a local development server, run:
-
-```bash
-ng serve
+```
+src/app
+│
+├── core
+│   └── config
+│       └── remotes.config.ts
+├── layout
+│   └── navbar.component.ts
+├── app.routes.ts
+└── app.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **remotes.config.ts:** URL del `remoteEntry.js` de cada microfrontend.
+- **navbar.component.ts:** navbar que permite navegar entre los microfrontends.
+- **app.routes.ts:** cada ruta carga el módulo expuesto `./Routes` del microfrontend con `loadRemoteModule`.
 
-## Code scaffolding
+## 🔌 Microfrontends Integrados
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Ruta del host | Microfrontend | Remote entry | Microservicio que consume |
+| --- | --- | --- | --- |
+| `/products` | `Microfrontend-Products-Angular` | `http://localhost:4201/remoteEntry.js` | `Microservice-Products-NodeJS` (3001) |
+| `/suppliers` | `Microfrontend-Suppliers-Angular` | `http://localhost:4202/remoteEntry.js` | `Microservice-Suppliers-SpringBoot` (3002) |
+| `/orders` | `Microfrontend-Orders-Angular` | `http://localhost:4203/remoteEntry.js` | `Microservice-Orders-NodeJS` (3003) |
 
-```bash
-ng generate component component-name
-```
+## 📋 Requisitos Previos
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Node.js 20.19+ (o 22.12+)
+- npm
+- Google Chrome (para las pruebas)
+- Los tres microfrontends en ejecución
 
-```bash
-ng generate --help
-```
+## 🚀 Ejecución
 
-## Building
+### 1️⃣ Instalar Dependencias
 
-To build the project run:
+- Ubícate en la raíz de `Client-Host-Angular` y ejecuta: `npm i`
 
-```bash
-ng build
-```
+### 2️⃣ Ejecutar el Proyecto
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Ejecuta el comando: `npm start`
 
-## Running unit tests
+### 3️⃣ Verificar Funcionamiento
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Corriendo en: `http://localhost:4200`
 
-```bash
-ng test
-```
+## 🧪 Pruebas Unitarias
 
-## Running end-to-end tests
+- Ejecuta: `npm test -- --no-watch --code-coverage --browsers=ChromeHeadless`
 
-For end-to-end (e2e) testing, run:
+## 📚 Documentación Técnica (Compodoc)
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Generar: `npm run compodoc`
+- Ver: `npx compodoc -s -d documentation` y abrir `http://localhost:8080`
